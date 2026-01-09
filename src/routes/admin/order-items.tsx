@@ -1,4 +1,5 @@
 import { CreateOrderItemModal } from "@/components/CreateOrderItem";
+import { OrderItemDTO } from "@/shared/types/order-item";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
@@ -8,6 +9,7 @@ export const Route = createFileRoute("/admin/order-items")({
 
 function RouteComponent() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [orderItems, setOrderItems] = useState<OrderItemDTO[]>([]);
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -40,7 +42,7 @@ function RouteComponent() {
           </thead>
 
           <tbody className="divide-y">
-            {[].map((item) => (
+            {orderItems.map((item) => (
               <tr key={item.id} className="hover:bg-gray-50">
                 <td className="px-4 py-3">{item.name}</td>
                 <td className="px-4 py-3">₱{item.price.toFixed(2)}</td>
