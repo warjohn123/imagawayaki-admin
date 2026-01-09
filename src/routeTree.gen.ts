@@ -9,7 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminOrdersRouteImport } from './routes/admin/orders'
+import { Route as AdminOrderItemsRouteImport } from './routes/admin/order-items'
+import { Route as AdminFranchiseesRouteImport } from './routes/admin/franchisees'
+import { Route as AdminCommissaryInventoryRouteImport } from './routes/admin/commissary-inventory'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
@@ -18,11 +24,42 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminOrdersRoute = AdminOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminOrderItemsRoute = AdminOrderItemsRouteImport.update({
+  id: '/order-items',
+  path: '/order-items',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFranchiseesRoute = AdminFranchiseesRouteImport.update({
+  id: '/franchisees',
+  path: '/franchisees',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCommissaryInventoryRoute =
+  AdminCommissaryInventoryRouteImport.update({
+    id: '/commissary-inventory',
+    path: '/commissary-inventory',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/demo/start/server-funcs',
   path: '/demo/start/server-funcs',
@@ -61,6 +98,12 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/admin/commissary-inventory': typeof AdminCommissaryInventoryRoute
+  '/admin/franchisees': typeof AdminFranchiseesRoute
+  '/admin/order-items': typeof AdminOrderItemsRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -71,6 +114,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/admin/commissary-inventory': typeof AdminCommissaryInventoryRoute
+  '/admin/franchisees': typeof AdminFranchiseesRoute
+  '/admin/order-items': typeof AdminOrderItemsRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -82,6 +131,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/admin/commissary-inventory': typeof AdminCommissaryInventoryRoute
+  '/admin/franchisees': typeof AdminFranchiseesRoute
+  '/admin/order-items': typeof AdminOrderItemsRoute
+  '/admin/orders': typeof AdminOrdersRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -94,6 +149,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/login'
+    | '/admin/commissary-inventory'
+    | '/admin/franchisees'
+    | '/admin/order-items'
+    | '/admin/orders'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -104,6 +165,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
+    | '/login'
+    | '/admin/commissary-inventory'
+    | '/admin/franchisees'
+    | '/admin/order-items'
+    | '/admin/orders'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -114,6 +181,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
+    | '/login'
+    | '/admin/commissary-inventory'
+    | '/admin/franchisees'
+    | '/admin/order-items'
+    | '/admin/orders'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -125,6 +198,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  LoginRoute: typeof LoginRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
@@ -136,12 +211,54 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/orders': {
+      id: '/admin/orders'
+      path: '/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AdminOrdersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/order-items': {
+      id: '/admin/order-items'
+      path: '/order-items'
+      fullPath: '/admin/order-items'
+      preLoaderRoute: typeof AdminOrderItemsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/franchisees': {
+      id: '/admin/franchisees'
+      path: '/franchisees'
+      fullPath: '/admin/franchisees'
+      preLoaderRoute: typeof AdminFranchiseesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/commissary-inventory': {
+      id: '/admin/commissary-inventory'
+      path: '/commissary-inventory'
+      fullPath: '/admin/commissary-inventory'
+      preLoaderRoute: typeof AdminCommissaryInventoryRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
@@ -195,8 +312,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminCommissaryInventoryRoute: typeof AdminCommissaryInventoryRoute
+  AdminFranchiseesRoute: typeof AdminFranchiseesRoute
+  AdminOrderItemsRoute: typeof AdminOrderItemsRoute
+  AdminOrdersRoute: typeof AdminOrdersRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCommissaryInventoryRoute: AdminCommissaryInventoryRoute,
+  AdminFranchiseesRoute: AdminFranchiseesRoute,
+  AdminOrderItemsRoute: AdminOrderItemsRoute,
+  AdminOrdersRoute: AdminOrdersRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  LoginRoute: LoginRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
