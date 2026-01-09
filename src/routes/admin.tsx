@@ -40,7 +40,7 @@ function AdminLayout() {
             Franchisees
           </a>
           <a
-            href="/admin/items"
+            href="/admin/order-items"
             className="rounded px-3 py-2 hover:bg-gray-700"
           >
             Items
