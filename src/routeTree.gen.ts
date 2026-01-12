@@ -16,6 +16,7 @@ import { Route as AdminOrdersRouteImport } from './routes/admin/orders'
 import { Route as AdminOrderItemsRouteImport } from './routes/admin/order-items'
 import { Route as AdminFranchiseesRouteImport } from './routes/admin/franchisees'
 import { Route as AdminCommissaryInventoryRouteImport } from './routes/admin/commissary-inventory'
+import { Route as AdminBranchesRouteImport } from './routes/admin/branches'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
@@ -60,6 +61,11 @@ const AdminCommissaryInventoryRoute =
     path: '/commissary-inventory',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminBranchesRoute = AdminBranchesRouteImport.update({
+  id: '/branches',
+  path: '/branches',
+  getParentRoute: () => AdminRoute,
+} as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/demo/start/server-funcs',
   path: '/demo/start/server-funcs',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/admin/branches': typeof AdminBranchesRoute
   '/admin/commissary-inventory': typeof AdminCommissaryInventoryRoute
   '/admin/franchisees': typeof AdminFranchiseesRoute
   '/admin/order-items': typeof AdminOrderItemsRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/admin/branches': typeof AdminBranchesRoute
   '/admin/commissary-inventory': typeof AdminCommissaryInventoryRoute
   '/admin/franchisees': typeof AdminFranchiseesRoute
   '/admin/order-items': typeof AdminOrderItemsRoute
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
+  '/admin/branches': typeof AdminBranchesRoute
   '/admin/commissary-inventory': typeof AdminCommissaryInventoryRoute
   '/admin/franchisees': typeof AdminFranchiseesRoute
   '/admin/order-items': typeof AdminOrderItemsRoute
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/login'
+    | '/admin/branches'
     | '/admin/commissary-inventory'
     | '/admin/franchisees'
     | '/admin/order-items'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/login'
+    | '/admin/branches'
     | '/admin/commissary-inventory'
     | '/admin/franchisees'
     | '/admin/order-items'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/login'
+    | '/admin/branches'
     | '/admin/commissary-inventory'
     | '/admin/franchisees'
     | '/admin/order-items'
@@ -260,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCommissaryInventoryRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/branches': {
+      id: '/admin/branches'
+      path: '/branches'
+      fullPath: '/admin/branches'
+      preLoaderRoute: typeof AdminBranchesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
       path: '/demo/start/server-funcs'
@@ -313,6 +332,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminBranchesRoute: typeof AdminBranchesRoute
   AdminCommissaryInventoryRoute: typeof AdminCommissaryInventoryRoute
   AdminFranchiseesRoute: typeof AdminFranchiseesRoute
   AdminOrderItemsRoute: typeof AdminOrderItemsRoute
@@ -320,6 +340,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminBranchesRoute: AdminBranchesRoute,
   AdminCommissaryInventoryRoute: AdminCommissaryInventoryRoute,
   AdminFranchiseesRoute: AdminFranchiseesRoute,
   AdminOrderItemsRoute: AdminOrderItemsRoute,

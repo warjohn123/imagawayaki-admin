@@ -41,6 +41,12 @@ function AdminLayout() {
             Franchisees
           </a>
           <a
+            href="/admin/branches"
+            className={`rounded px-3 py-2 hover:bg-gray-700 ${currentPath === "/admin/branches" ? "bg-gray-700" : ""}`}
+          >
+            Branches
+          </a>
+          <a
             href="/admin/order-items"
             className={`rounded px-3 py-2 hover:bg-gray-700 ${currentPath === "/admin/order-items" ? "bg-gray-700" : ""}`}
           >
