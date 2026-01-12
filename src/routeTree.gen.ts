@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiBranchesRouteImport } from './routes/api/branches'
 import { Route as AdminOrdersRouteImport } from './routes/admin/orders'
 import { Route as AdminOrderItemsRouteImport } from './routes/admin/order-items'
 import { Route as AdminFranchiseesRouteImport } from './routes/admin/franchisees'
@@ -38,6 +39,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiBranchesRoute = ApiBranchesRouteImport.update({
+  id: '/api/branches',
+  path: '/api/branches',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminOrdersRoute = AdminOrdersRouteImport.update({
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/admin/franchisees': typeof AdminFranchiseesRoute
   '/admin/order-items': typeof AdminOrderItemsRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/api/branches': typeof ApiBranchesRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByTo {
   '/admin/franchisees': typeof AdminFranchiseesRoute
   '/admin/order-items': typeof AdminOrderItemsRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/api/branches': typeof ApiBranchesRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -146,6 +154,7 @@ export interface FileRoutesById {
   '/admin/franchisees': typeof AdminFranchiseesRoute
   '/admin/order-items': typeof AdminOrderItemsRoute
   '/admin/orders': typeof AdminOrdersRoute
+  '/api/branches': typeof ApiBranchesRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/admin/franchisees'
     | '/admin/order-items'
     | '/admin/orders'
+    | '/api/branches'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -182,6 +192,7 @@ export interface FileRouteTypes {
     | '/admin/franchisees'
     | '/admin/order-items'
     | '/admin/orders'
+    | '/api/branches'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -199,6 +210,7 @@ export interface FileRouteTypes {
     | '/admin/franchisees'
     | '/admin/order-items'
     | '/admin/orders'
+    | '/api/branches'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -212,6 +224,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ApiBranchesRoute: typeof ApiBranchesRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
@@ -242,6 +255,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/branches': {
+      id: '/api/branches'
+      path: '/api/branches'
+      fullPath: '/api/branches'
+      preLoaderRoute: typeof ApiBranchesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/orders': {
@@ -353,6 +373,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   LoginRoute: LoginRoute,
+  ApiBranchesRoute: ApiBranchesRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,

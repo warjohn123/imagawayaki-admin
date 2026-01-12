@@ -1,15 +1,27 @@
-import { CreateFranchiseeModal } from "@/components/CreateFranchiseeModal";
-import { FranchiseeDTO } from "@/shared/types/users";
+import { CreateBranchModal } from "@/components/CreateBranchModal";
+import { fetchBranches } from "@/services/branches.service";
+import { BranchDTO } from "@/shared/types/branch";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/admin/branches")({
   component: BranchesPage,
 });
 
 function BranchesPage() {
-  const [branches, setBranches] = useState<FranchiseeDTO[]>([]);
+  const [loadingBranches, setLoadingBranches] = useState(false);
+  const [branches, setBranches] = useState<BranchDTO[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  async function loadBranches() {
+    const res = await fetchBranches();
+    setBranches(res);
+  }
+
+  useEffect(() => {
+    loadBranches();
+  }, []);
+
   return (
     <div>
       <div className="flex justify-between">
@@ -40,8 +52,7 @@ function BranchesPage() {
           <tbody className="divide-y">
             {branches.map((item) => (
               <tr key={item.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3">Warren</td>
-                <td className="px-4 py-3">Tisa Branch</td>
+                <td className="px-4 py-3">{item.name}</td>
                 <td className="px-4 py-3 text-right space-x-2">
                   <button
                     className="px-3 py-1 text-sm rounded-md bg-yellow-500 text-white hover:bg-yellow-600"
@@ -69,10 +80,12 @@ function BranchesPage() {
             )}
           </tbody>
         </table>
-        <CreateFranchiseeModal
+        <CreateBranchModal
           open={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          onCreate={() => {}}
+          onCreate={() => {
+            loadBranches();
+          }}
         />
       </div>
     </div>

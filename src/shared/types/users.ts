@@ -3,12 +3,12 @@ export type UserDTO = {
   name: string;
   email: string;
   role: "franchisee" | "admin" | "order_collector" | "commissary_staff";
-  createdAt: string;
+  created_at: string;
 };
 
 export type FranchiseeDTO = {
   id: number;
   user_id: number;
   branch_id: string;
-  createdAt: string;
+  created_at: string;
 };

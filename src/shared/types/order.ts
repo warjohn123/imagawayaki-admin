@@ -4,5 +4,5 @@ export type OrderDTO = {
   id: number;
   franchisee_id: number;
   orders: OrderItemDTO[];
-  createdAt: string;
+  created_at: string;
 };
