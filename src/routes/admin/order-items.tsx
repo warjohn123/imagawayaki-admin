@@ -1,4 +1,4 @@
-import { CreateOrderItemModal } from "@/components/CreateOrderItem";
+import { CreateOrderItemModal } from "@/components/CreateOrderItemModal";
 import { OrderItemDTO } from "@/shared/types/order-item";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";

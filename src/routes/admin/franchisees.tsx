@@ -1,4 +1,5 @@
-import { UserDTO } from "@/shared/types/users";
+import { CreateFranchiseeModal } from "@/components/CreateFranchiseeModal";
+import { FranchiseeDTO } from "@/shared/types/users";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
@@ -7,10 +8,19 @@ export const Route = createFileRoute("/admin/franchisees")({
 });
 
 function FranchiseesPage() {
-  const [users, setUsers] = useState<UserDTO[]>([]);
+  const [franchisees, setFranchisees] = useState<FranchiseeDTO[]>([]);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   return (
     <div>
-      <h1 className="text-2xl font-semibold mb-4">Franchisees</h1>
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-semibold mb-4">Franchisees</h1>
+        <button
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          onClick={() => setIsCreateModalOpen(true)}
+        >
+          + Create Franchisee
+        </button>
+      </div>
       <p>Here you can manage all franchisees.</p>
 
       {/* Table */}
@@ -31,10 +41,10 @@ function FranchiseesPage() {
           </thead>
 
           <tbody className="divide-y">
-            {users.map((item) => (
+            {franchisees.map((item) => (
               <tr key={item.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3">{item.name}</td>
-                <td className="px-4 py-3">₱{item.branch}</td>
+                <td className="px-4 py-3">Warren</td>
+                <td className="px-4 py-3">Tisa Branch</td>
                 <td className="px-4 py-3 text-right space-x-2">
                   <button
                     className="px-3 py-1 text-sm rounded-md bg-yellow-500 text-white hover:bg-yellow-600"
@@ -53,15 +63,20 @@ function FranchiseesPage() {
               </tr>
             ))}
 
-            {[].length === 0 && (
+            {franchisees.length === 0 && (
               <tr>
                 <td colSpan={3} className="px-4 py-6 text-center text-gray-500">
-                  No users found.
+                  No franchisees found.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+        <CreateFranchiseeModal
+          open={isCreateModalOpen}
+          onClose={() => setIsCreateModalOpen(false)}
+          onCreate={() => {}}
+        />
       </div>
     </div>
   );
