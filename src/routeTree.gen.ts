@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiOrderItemsRouteImport } from './routes/api/order-items'
 import { Route as ApiBranchesRouteImport } from './routes/api/branches'
 import { Route as AdminOrdersRouteImport } from './routes/admin/orders'
 import { Route as AdminOrderItemsRouteImport } from './routes/admin/order-items'
@@ -39,6 +40,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOrderItemsRoute = ApiOrderItemsRouteImport.update({
+  id: '/api/order-items',
+  path: '/api/order-items',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiBranchesRoute = ApiBranchesRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/admin/order-items': typeof AdminOrderItemsRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/api/branches': typeof ApiBranchesRoute
+  '/api/order-items': typeof ApiOrderItemsRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/admin/order-items': typeof AdminOrderItemsRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/api/branches': typeof ApiBranchesRoute
+  '/api/order-items': typeof ApiOrderItemsRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/admin/order-items': typeof AdminOrderItemsRoute
   '/admin/orders': typeof AdminOrdersRoute
   '/api/branches': typeof ApiBranchesRoute
+  '/api/order-items': typeof ApiOrderItemsRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/admin/order-items'
     | '/admin/orders'
     | '/api/branches'
+    | '/api/order-items'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/admin/order-items'
     | '/admin/orders'
     | '/api/branches'
+    | '/api/order-items'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/admin/order-items'
     | '/admin/orders'
     | '/api/branches'
+    | '/api/order-items'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -225,6 +237,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   LoginRoute: typeof LoginRoute
   ApiBranchesRoute: typeof ApiBranchesRoute
+  ApiOrderItemsRoute: typeof ApiOrderItemsRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
@@ -255,6 +268,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/order-items': {
+      id: '/api/order-items'
+      path: '/api/order-items'
+      fullPath: '/api/order-items'
+      preLoaderRoute: typeof ApiOrderItemsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/branches': {
@@ -374,6 +394,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   LoginRoute: LoginRoute,
   ApiBranchesRoute: ApiBranchesRoute,
+  ApiOrderItemsRoute: ApiOrderItemsRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,

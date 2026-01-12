@@ -1,9 +1,11 @@
+import { createOrderItem } from "@/services/order_items.service";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 type CreateOrderItemModalProps = {
   open: boolean;
   onClose: () => void;
-  onCreate: (item: { name: string; price: number }) => void;
+  onCreate: () => void;
 };
 
 export function CreateOrderItemModal({
@@ -13,20 +15,25 @@ export function CreateOrderItemModal({
 }: CreateOrderItemModalProps) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   if (!open) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    onCreate({
-      name,
-      price: Number(price),
-    });
+    setLoading(true);
 
-    setName("");
-    setPrice("");
-    onClose();
+    try {
+      await createOrderItem(name, parseFloat(price));
+      onCreate();
+      setName("");
+      onClose();
+    } catch (e) {
+      toast.error("Failed to create order item");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -77,7 +84,8 @@ export function CreateOrderItemModal({
 
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+              disabled={loading}
+              className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Create
             </button>

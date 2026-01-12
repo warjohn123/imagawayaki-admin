@@ -50,7 +50,7 @@ function AdminLayout() {
             href="/admin/order-items"
             className={`rounded px-3 py-2 hover:bg-gray-700 ${currentPath === "/admin/order-items" ? "bg-gray-700" : ""}`}
           >
-            Items
+            Order Items
           </a>
           <a
             href="/admin/commissary-inventory"

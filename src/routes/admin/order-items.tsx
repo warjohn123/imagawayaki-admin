@@ -1,7 +1,8 @@
 import { CreateOrderItemModal } from "@/components/CreateOrderItemModal";
+import { fetchOrderItems } from "@/services/order_items.service";
 import { OrderItemDTO } from "@/shared/types/order-item";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/admin/order-items")({
   component: RouteComponent,
@@ -10,6 +11,16 @@ export const Route = createFileRoute("/admin/order-items")({
 function RouteComponent() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [orderItems, setOrderItems] = useState<OrderItemDTO[]>([]);
+
+  async function loadOrderItems() {
+    const res = await fetchOrderItems();
+    setOrderItems(res);
+  }
+
+  useEffect(() => {
+    loadOrderItems();
+  }, []);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -76,7 +87,7 @@ function RouteComponent() {
         <CreateOrderItemModal
           open={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          onCreate={() => {}}
+          onCreate={() => loadOrderItems()}
         />
       </div>
     </div>
